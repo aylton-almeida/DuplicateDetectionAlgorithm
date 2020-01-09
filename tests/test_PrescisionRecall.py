@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.helpers import PrecisionRecall
+from scripts.utils import PrecisionRecall
 
 
 class MyTestCase(unittest.TestCase):

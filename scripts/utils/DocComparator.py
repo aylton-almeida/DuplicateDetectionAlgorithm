@@ -1,12 +1,10 @@
-import pprint
-
 from fuzzywuzzy import fuzz
 
-from scripts.helpers import DocCleaner
 from scripts.helpers.FileHelper import FileHelper
 
 
-# Tests realized between: ratio(), partial_ratio(), partial_token_set_ratio(), partial_token_sort_ratio()
+# Tests realized between: ratio(), partial_ratio(), token_set_ratio(), token_sort_ratio(), partial_token_set_ratio(),
+# partial_token_sort_ratio()
 
 
 def is_name_similar(name1: str, name2: str) -> int:
@@ -21,7 +19,7 @@ def is_address_similar(address1: str, address2: str) -> int:
 
 
 # The citys can be different
-# Receive the for the city
+# Receive the key for the city
 def is_city_similar(city1: str, city2: str) -> int:
     if city1 == city2:
         return 100
@@ -58,14 +56,15 @@ def is_doc_similar(doc1: dict, doc2: dict) -> int:
     result_phone = is_phone_similar(doc1['phone'], doc2['phone'])
     result_address = is_address_similar(doc1['address'], doc2['address'])
     result_type = is_type_similar(doc1['typeKey'], doc2['typeKey'])
-    total = (result_name * nameWeight) + (result_city * cityWeight) + (result_phone * phoneWeight) + (result_address * addressWeight) + (result_type * typeWeight)
+    total = (result_name * nameWeight) + (result_city * cityWeight) + (result_phone * phoneWeight) + (
+            result_address * addressWeight) + (result_type * typeWeight)
     return total
 
 
-# Find adequate method to compare to strings
+# Find adequate method to compare two strings
 def find_adequate_method(category: str, comparator_method: staticmethod, cleaner_method: staticmethod):
     file = '../restaurants.tsv'
-    golden_standart = '../restaurants_DPL.tsv'
+    golden_standart = '../golden_standart.tsv'
 
     file_helper = FileHelper(file, '\t')
     file_list = list(filter(lambda r: int(r['id']) <= 224, file_helper.read_file()))

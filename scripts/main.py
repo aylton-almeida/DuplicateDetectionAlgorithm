@@ -1,10 +1,10 @@
 from scripts.database.CitysDict import get_city_key
 from scripts.database.TypeDict import get_type_key
-from scripts.helpers import DocCleaner, DocComparator
+from scripts.utils import DocComparator, DocCleaner
 from scripts.helpers.FileHelper import FileHelper
 import pprint
 
-from scripts.helpers.PrecisionRecall import calculate_precision_recall
+from scripts.utils.PrecisionRecall import calculate_precision_recall
 
 file = '../restaurants.tsv'
 golden_standart_file = '../golden_standart.tsv'
@@ -44,7 +44,7 @@ def main():
                 if not any(elem['keyPair'] == (item['keyPair'][1], item['keyPair'][0]) for elem in final_list):
                     final_list.append(item)
 
-    # Compare to golden standart (Tuple list)
+    # Compare to golden standart (Tuple list) and print results
     results = calculate_precision_recall(golden_list, final_list)
     print('False Positives')
     pprint.pprint(results[0])
@@ -55,19 +55,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    #     Useful section
-    #     DocComparator.find_adequate_method('name', DocComparator.is_name_similar, DocCleaner.fix_name)
-
-    # duplicates_list = []
-    # for i in list_with_keys:
-    #     if list_with_keys.index(i) != 2:
-    #         duplicates_list.append((list_with_keys.index(i), DocComparator.is_doc_similar(i, list_with_keys[2])))
-    # pprint.pprint(sorted(duplicates_list, key=lambda j: j[1]))
-
-    # results = []
-    # for item in golden_list:
-    #     results.append(
-    #         (item,
-    #          DocComparator.is_doc_similar(list_with_keys[int(item['id1']) - 1], list_with_keys[int(item['id2']) - 1])))
-    # pprint.pprint(sorted(results, key=lambda i: i[1], reverse=False))

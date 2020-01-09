@@ -1,8 +1,11 @@
+# Calculate the precion and recall, returning a tuple containing false positives and false negatives lists
 def calculate_precision_recall(true_positives: list, classifier_duplicates: list) -> tuple:
     false_positives = []
     false_negatives = []
     for item in classifier_duplicates:
-        if not any(int(item['keyPair'][0]) == int(elem['id1']) and int(item['keyPair'][1]) == int(elem['id2']) for elem in true_positives):
+        if not any(
+                int(item['keyPair'][0]) == int(elem['id1']) and int(item['keyPair'][1]) == int(elem['id2']) for elem in
+                true_positives):
             false_positives.append(item)
     for item in true_positives:
         if not any(

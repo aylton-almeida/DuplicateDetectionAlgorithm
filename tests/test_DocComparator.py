@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.helpers import DocComparator
+from scripts.utils import DocComparator
 
 
 class MyTestCase(unittest.TestCase):

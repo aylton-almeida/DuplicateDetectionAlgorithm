@@ -1,5 +1,5 @@
 # Dictionary containing a mapping of all regions and citys
-from scripts.helpers import DocCleaner
+from scripts.utils import DocCleaner
 from scripts.helpers.FileHelper import FileHelper
 
 cityMap = dict(west={

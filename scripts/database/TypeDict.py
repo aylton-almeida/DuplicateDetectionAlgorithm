@@ -1,4 +1,4 @@
-from scripts.helpers import DocCleaner
+from scripts.utils import DocCleaner
 from scripts.helpers.FileHelper import FileHelper
 
 typeDict = {

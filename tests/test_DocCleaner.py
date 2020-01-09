@@ -1,6 +1,6 @@
 import unittest
 
-from scripts.helpers import DocCleaner
+from scripts.utils import DocCleaner
 
 
 class MyTestCase(unittest.TestCase):
@@ -77,7 +77,7 @@ class MyTestCase(unittest.TestCase):
                 'name': "arnie morton s of chicago"
             }
         ]
-        self.assertEquals(DocCleaner.clean_doc_list(old_arr),new_arr)
+        self.assertEquals(DocCleaner.clean_doc_list(old_arr), new_arr)
 
         if __name__ == '__main__':
             unittest.main()
