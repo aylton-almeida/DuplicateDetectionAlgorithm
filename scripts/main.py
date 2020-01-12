@@ -1,6 +1,6 @@
 import pymongo
 
-from scripts.api.MongoDBCreadentials import mongo_pass
+from scripts.api.MongoDBCreadentials import mongo_credentials
 from scripts.database.CitysDict import get_city_key
 from scripts.database.TypeDict import get_type_key
 from scripts.utils import DocComparator, DocCleaner
@@ -14,14 +14,9 @@ golden_standart_file = '../golden_standart.tsv'
 
 
 def main():
-    client = pymongo.MongoClient(
-        "mongodb+srv://admin:{}@datawranglingwithmongodb-grevy.gcp.mongodb.net/test?retryWrites=true&w=majority".format(
-            mongo_pass))
-    db = client.test
-
-    print(db)
-
     print('Detection started')
+
+    # Read files
     file_helper = FileHelper(file, '\t')
     file_list = file_helper.read_file()
 
@@ -61,6 +56,13 @@ def main():
     print()
     print('False Negatives')
     pprint.pprint(results[1])
+
+    # Upload results to mongoDB
+    client = pymongo.MongoClient(mongo_credentials['connection'])
+    db = client[mongo_credentials['database']][mongo_credentials['collection']]
+
+    for item in final_list:
+        db.insert_one(item)
 
 
 if __name__ == '__main__':
