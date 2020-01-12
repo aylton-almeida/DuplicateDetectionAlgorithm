@@ -1,3 +1,6 @@
+import pymongo
+
+from scripts.api.MongoDBCreadentials import mongo_pass
 from scripts.database.CitysDict import get_city_key
 from scripts.database.TypeDict import get_type_key
 from scripts.utils import DocComparator, DocCleaner
@@ -11,6 +14,13 @@ golden_standart_file = '../golden_standart.tsv'
 
 
 def main():
+    client = pymongo.MongoClient(
+        "mongodb+srv://admin:{}@datawranglingwithmongodb-grevy.gcp.mongodb.net/test?retryWrites=true&w=majority".format(
+            mongo_pass))
+    db = client.test
+
+    print(db)
+
     print('Detection started')
     file_helper = FileHelper(file, '\t')
     file_list = file_helper.read_file()
