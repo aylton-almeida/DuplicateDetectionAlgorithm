@@ -9,3 +9,4 @@ mongo_credentials = {
     'database': mongo_database,
     'collection': mongo_collection
 }
+
