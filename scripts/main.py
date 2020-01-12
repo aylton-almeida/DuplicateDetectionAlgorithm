@@ -62,7 +62,7 @@ def main():
     db = client[mongo_credentials['database']][mongo_credentials['collection']]
 
     for item in final_list:
-        db.insert_one(item)
+        db.insert_one({'id1': item['keyPair'][0], 'id2': item['keyPair'][1]})
 
 
 if __name__ == '__main__':
