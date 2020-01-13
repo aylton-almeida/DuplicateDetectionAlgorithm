@@ -35,7 +35,7 @@ def main():
         list_with_keys.append(new_item)
 
     # Compare docs and identify duplicates
-    final_list = []
+    results_list = []
     for i in list_with_keys:
         duplicates_list = []
         for j in list_with_keys:
@@ -46,23 +46,33 @@ def main():
                         {'keyPair': (list_with_keys.index(i) + 1, list_with_keys.index(j) + 1), 'result': result})
         if len(duplicates_list) > 0:
             for item in duplicates_list:
-                if not any(elem['keyPair'] == (item['keyPair'][1], item['keyPair'][0]) for elem in final_list):
-                    final_list.append(item)
+                if not any(elem['keyPair'] == (item['keyPair'][1], item['keyPair'][0]) for elem in results_list):
+                    results_list.append(item)
 
-    # Compare to golden standart (Tuple list) and print results
-    results = calculate_precision_recall(golden_list, final_list)
-    print('False Positives')
-    pprint.pprint(results[0])
-    print()
-    print('False Negatives')
-    pprint.pprint(results[1])
+    # Remove duplicates from file
+    duplicates_ids = []
+    for item in results_list:
+        rest = item['keyPair'][1]
+        if rest not in duplicates_ids:
+            duplicates_ids.append(rest)
+
+        # if rest not in non_duplicates and not any(int(elem['keyPair'][1]) == int(rest) for elem in results_list):
+        #     non_duplicates.append(item['keyPair'][0])
 
     # Upload results to mongoDB
     client = pymongo.MongoClient(mongo_credentials['connection'])
     db = client[mongo_credentials['database']][mongo_credentials['collection']]
 
-    for item in final_list:
-        db.insert_one({'id1': item['keyPair'][0], 'id2': item['keyPair'][1]})
+    for item in file_list:
+        if int(item['id']) not in duplicates_ids:
+            db.insert_one(item)
+
+    # Compare to golden standart (Tuple list) and print results
+    results = calculate_precision_recall(golden_list, results_list)
+    print('False Positives')
+    pprint.pprint(results[0])
+    print('\nFalse Negatives')
+    pprint.pprint(results[1])
 
 
 if __name__ == '__main__':

@@ -1,8 +1,8 @@
 # Insert your credentials for the atlas mongo db
-mongo_pass = "<YOUR_PASSWORD>"
-mongo_url = "<YOUR_URL>"
-mongo_database = "<YOUR_DATABASE>"
-mongo_collection = "<YOUR_COLLECTION>"
+mongo_pass = "OifBihkGxuGrI5bY"
+mongo_url = "mongodb+srv://admin:{}@datawranglingwithmongodb-grevy.gcp.mongodb.net/test?retryWrites=true&w=majority"
+mongo_database = "duplicateDetectionApp"
+mongo_collection = "uniqueRestaurants"
 
 mongo_credentials = {
     'connection': mongo_url.format(mongo_pass),
